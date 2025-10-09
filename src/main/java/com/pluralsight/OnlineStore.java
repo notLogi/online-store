@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.*;
 
 /**
  * Starter code for the Online Store workshop.
@@ -57,6 +58,21 @@ public class OnlineStore {
     public static void loadInventory(String fileName, ArrayList<Product> inventory) {
         // TODO: read each line, split on "|",
         //       create a Product object, and add it to the inventory list
+        try(BufferedReader reader = new BufferedReader((new FileReader(fileName)))){
+            String input;
+            while((input = reader.readLine()) != null){
+                String[] token = input.split("\\|");
+                String sku = token[0];
+                String name = token[1];
+                double price = Double.parseDouble(token[2]);
+                String department = token[3];
+            }
+        }
+        catch(IOException ex){
+            System.err.println("file not found");
+            ex.getStackTrace();
+        }
+
     }
 
     /**
