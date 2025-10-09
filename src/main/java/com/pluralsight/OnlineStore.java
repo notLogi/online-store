@@ -56,8 +56,6 @@ public class OnlineStore {
      * A17|Wireless Mouse|19.99
      */
     public static void loadInventory(String fileName, ArrayList<Product> inventory) {
-        // TODO: read each line, split on "|",
-        //       create a Product object, and add it to the inventory list
         try(BufferedReader reader = new BufferedReader((new FileReader(fileName)))){
             String input;
             while((input = reader.readLine()) != null){
@@ -66,13 +64,13 @@ public class OnlineStore {
                 String name = token[1];
                 double price = Double.parseDouble(token[2]);
                 String department = token[3];
+                inventory.add(new Product(sku, name, price, department));
             }
         }
         catch(IOException ex){
             System.err.println("file not found");
             ex.getStackTrace();
         }
-
     }
 
     /**
