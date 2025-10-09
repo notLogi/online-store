@@ -6,7 +6,6 @@ import java.io.*;
 
 
 public class OnlineStore {
-
     public static void main(String[] args) {
 
         // Create lists for inventory and the shopping cart
@@ -35,18 +34,37 @@ public class OnlineStore {
             scanner.nextLine();                     // clear newline
 
             switch (choice) {
-                case 1 -> displayProducts(inventory, cart, scanner);
-                case 2 -> displayCart(cart, scanner);
-                case 3 -> System.out.println("Thank you for shopping with us!");
-                default -> System.out.println("Invalid choice!");
+                case 1:
+                    displayProducts(inventory, cart, scanner);
+                    break;
+                case 2:
+                    if(!cart.isEmpty()){
+                        displayCart(cart, scanner);
+                    }
+                    else{
+                        System.out.println("Your cart is empty.");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Thank you for shopping with us!");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
             }
         }
         scanner.close();
     }
-
+    /**
+     * Reads product data from a file and populates the inventory list.
+     * File format (pipe-delimited):
+     * id|name|price
+     * <p>
+     * Example line:
+     * A17|Wireless Mouse|19.99
+     */
     public static void loadInventory(String fileName, ArrayList<Product> inventory) {
         try(BufferedReader reader = new BufferedReader((new FileReader(fileName)))){
-            String input;
+            String input = reader.readLine();
             while((input = reader.readLine()) != null){
                 String[] token = input.split("\\|");
                 String sku = token[0];
@@ -58,31 +76,30 @@ public class OnlineStore {
         }
         catch(IOException ex){
             System.err.println("file not found");
-            ex.getStackTrace();
         }
     }
-
+    /**
+     * Displays all products and lets the user add one to the cart.
+     * Typing X returns to the main menu.
+     */
     public static void displayProducts(ArrayList<Product> inventory, ArrayList<Product> cart, Scanner scanner) {
         for(Product product : inventory){
-            System.out.println(product.displayStringProduct());
+            System.out.println(product.displayStringCart());
         }
 
-        System.out.println("Enter id of the product");
+        System.out.println("Enter id of the product(Type X to return to main menu.)");
         String id = scanner.nextLine();
 
-        for(Product product : inventory){
-            if(id.equalsIgnoreCase(product.getSku())){
-                cart.add(product);
-                System.out.println("Product added to cart!");
-                break;
-            }
+        if(id.equalsIgnoreCase("x")) return;
+
+        Product selected = findProductById(id, inventory);
+        if(selected != null){
+            cart.add(selected);
+            System.out.println("Product added successfully");
         }
+
     }
 
-    /**
-     * Shows the contents of the cart, calculates the total,
-     * and offers the option to check out.
-     */
     public static void displayCart(ArrayList<Product> cart, Scanner scanner) {
         double totalPrice = 0;
         System.out.println("Your cart: ");
@@ -117,27 +134,10 @@ public class OnlineStore {
         while(!didExit){
             switch(userInput.toUpperCase()) {
                 case "R":
-                    System.out.println("type the ID you want to remove: ");
-                    String idInput = scanner.nextLine();
-                    for (Product product : cart) {
-                        if (product.getSku().equalsIgnoreCase(idInput)) {
-                            cart.remove(product);
-                            break;
-                        }
-                    }
-                    System.out.println("Input is invalid");
+                    removeItem(cart, scanner);
                     break;
                 case "Y":
-                    System.out.println("Enter your payment.");
-                    double userPaying = scanner.nextDouble();
-                    scanner.nextLine();
-                    double change = userPaying - totalAmount;
-                    System.out.println("Here are your items bought: ");
-                    for (Product product : cart) {
-                        System.out.println(product.displayStringProduct() + "\n");
-                    }
-                    if (change != 0) System.out.println("Change: $" + change);
-                    cart.clear();
+                    payCart(cart, scanner, totalAmount);
                     didExit = true;
                     break;
                 default:
@@ -153,7 +153,44 @@ public class OnlineStore {
      * @return the matching Product, or null if not found
      */
     public static Product findProductById(String id, ArrayList<Product> inventory) {
-        // TODO: loop over the list and compare ids
+        for(Product product : inventory){
+            if(id.equalsIgnoreCase(product.getSku())){
+                return product;
+            }
+        }
+        System.out.println("Product does not exist.");
         return null;
+    }
+    public static void payCart(ArrayList<Product> cart, Scanner scanner, double totalAmount){
+        System.out.println("Enter your payment.");
+        double userPaying = scanner.nextDouble();
+        scanner.nextLine();
+        double change = userPaying - totalAmount;
+        System.out.println("Here are your items bought: ");
+        for (Product product : cart) {
+            System.out.println(product.displayStringCart() + "\n");
+        }
+        if(change < 0){
+            System.out.println("You don't have enough money!");
+            return;
+        }
+        if (change != 0) System.out.printf("Change: $%.2f%n", change);
+        cart.clear();
+    }
+    public static void removeItem(ArrayList<Product> cart, Scanner scanner){
+        System.out.println("type the ID you want to remove: ");
+        System.out.println("Type X to return");
+        String idInput = scanner.nextLine();
+        if (idInput.equalsIgnoreCase("X")){
+            return;
+        }
+        for (int i = 0; i < cart.size(); i++) {
+            if (idInput.equalsIgnoreCase(cart.get(i).getSku())) {
+                cart.remove(i);
+                System.out.println("successfully removed");
+                return;
+            }
+        }
+        System.out.println("Input is invalid");
     }
 }

@@ -45,13 +45,6 @@ public class Product {
         this.department = department;
     }
 
-    public String displayStringProduct() {
-        return "Product: \n" +
-                "\nname: " + name +
-                "\nprice: " + price +
-                "\ndepartment: " + department;
-    }
-
     public String displayStringCart() {
         return "Product: \nID: " + sku +
                 "\nname: " + name +
