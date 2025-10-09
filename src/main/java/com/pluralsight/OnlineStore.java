@@ -73,15 +73,21 @@ public class OnlineStore {
         }
     }
 
-    /**
-     * Displays all products and lets the user add one to the cart.
-     * Typing X returns to the main menu.
-     */
-    public static void displayProducts(ArrayList<Product> inventory,
-                                       ArrayList<Product> cart,
-                                       Scanner scanner) {
-        // TODO: show each product (id, name, price),
-        //       prompt for an id, find that product, add to cart
+    public static void displayProducts(ArrayList<Product> inventory, ArrayList<Product> cart, Scanner scanner) {
+        for(Product product : inventory){
+            System.out.println(product.toString());
+        }
+
+        System.out.println("Enter id of the product");
+        String id = scanner.nextLine();
+
+        for(Product product : inventory){
+            if(id.equalsIgnoreCase(product.getSku())){
+                cart.add(product);
+                System.out.println("Product added to cart!");
+                break;
+            }
+        }
     }
 
     /**
@@ -94,6 +100,21 @@ public class OnlineStore {
         //   • compute the total cost
         //   • ask the user whether to check out (C) or return (X)
         //   • if C, call checkOut(cart, totalAmount, scanner)
+        double totalPrice = 0;
+        System.out.println("Your cart: ");
+        for(Product product : cart){
+            System.out.println(product.toString());
+            totalPrice += product.getPrice();
+        }
+        System.out.println("Do you want to checkout? Enter C to checkout and enter X to return.");
+        String userInput = scanner.nextLine();
+        if(userInput.equalsIgnoreCase("C")){
+            checkOut(cart, totalPrice, scanner);
+            return;
+        }
+        System.out.println("returning to menu.");
+
+
     }
 
     /**
