@@ -4,10 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.*;
 
-/**
- * Starter code for the Online Store workshop.
- * Students will complete the TODO sections to make the program work.
- */
+
 public class OnlineStore {
 
     public static void main(String[] args) {
@@ -47,14 +44,6 @@ public class OnlineStore {
         scanner.close();
     }
 
-    /**
-     * Reads product data from a file and populates the inventory list.
-     * File format (pipe-delimited):
-     * id|name|price
-     * <p>
-     * Example line:
-     * A17|Wireless Mouse|19.99
-     */
     public static void loadInventory(String fileName, ArrayList<Product> inventory) {
         try(BufferedReader reader = new BufferedReader((new FileReader(fileName)))){
             String input;
@@ -75,7 +64,7 @@ public class OnlineStore {
 
     public static void displayProducts(ArrayList<Product> inventory, ArrayList<Product> cart, Scanner scanner) {
         for(Product product : inventory){
-            System.out.println(product.toString());
+            System.out.println(product.displayStringProduct());
         }
 
         System.out.println("Enter id of the product");
@@ -95,26 +84,21 @@ public class OnlineStore {
      * and offers the option to check out.
      */
     public static void displayCart(ArrayList<Product> cart, Scanner scanner) {
-        // TODO:
-        //   • list each product in the cart
-        //   • compute the total cost
-        //   • ask the user whether to check out (C) or return (X)
-        //   • if C, call checkOut(cart, totalAmount, scanner)
         double totalPrice = 0;
         System.out.println("Your cart: ");
+
         for(Product product : cart){
-            System.out.println(product.toString());
+            System.out.println(product.displayStringCart());
             totalPrice += product.getPrice();
         }
+
         System.out.println("Do you want to checkout? Enter C to checkout and enter X to return.");
         String userInput = scanner.nextLine();
         if(userInput.equalsIgnoreCase("C")){
             checkOut(cart, totalPrice, scanner);
             return;
         }
-        System.out.println("returning to menu.");
-
-
+        System.out.println("Returning to menu.");
     }
 
     /**
@@ -124,10 +108,43 @@ public class OnlineStore {
      * 3. Display a simple receipt.
      * 4. Clear the cart.
      */
-    public static void checkOut(ArrayList<Product> cart,
-                                double totalAmount,
-                                Scanner scanner) {
-        // TODO: implement steps listed above
+    public static void checkOut(ArrayList<Product> cart, double totalAmount, Scanner scanner) {
+        System.out.println("Are you sure you want to checkout? Type Y");
+        System.out.println("If you want to remove an item, type R");
+        String userInput = scanner.nextLine();
+
+        boolean didExit = false;
+        while(!didExit){
+            switch(userInput.toUpperCase()) {
+                case "R":
+                    System.out.println("type the ID you want to remove: ");
+                    String idInput = scanner.nextLine();
+                    for (Product product : cart) {
+                        if (product.getSku().equalsIgnoreCase(idInput)) {
+                            cart.remove(product);
+                            break;
+                        }
+                    }
+                    System.out.println("Input is invalid");
+                    break;
+                case "Y":
+                    System.out.println("Enter your payment.");
+                    double userPaying = scanner.nextDouble();
+                    scanner.nextLine();
+                    double change = userPaying - totalAmount;
+                    System.out.println("Here are your items bought: ");
+                    for (Product product : cart) {
+                        System.out.println(product.displayStringProduct() + "\n");
+                    }
+                    if (change != 0) System.out.println("Change: $" + change);
+                    cart.clear();
+                    didExit = true;
+                    break;
+                default:
+                    System.out.println("Returning to menu");
+                    didExit = true;
+            }
+        }
     }
 
     /**
