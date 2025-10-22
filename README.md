@@ -42,11 +42,11 @@ Follow these steps to get your application running within IntelliJ IDEA:
 
 ## Demo(Left to right, top to bottom)
 <img width="251" height="148" alt="image" src="https://github.com/user-attachments/assets/d0781eaf-e249-412b-95b6-ecd3bcf05429" />
-<img width="492" height="370" alt="image" src="https://github.com/user-attachments/assets/ca8a9aad-a700-470c-874d-f2009c9f38f8" />
+<img width="492" height="150" alt="image" src="https://github.com/user-attachments/assets/ca8a9aad-a700-470c-874d-f2009c9f38f8" />
 <img width="241" height="151" alt="image" src="https://github.com/user-attachments/assets/cc8f13a4-151d-43a1-8cd7-16c6a5971009" />
 <img width="600" height="175" alt="image" src="https://github.com/user-attachments/assets/23e04c53-cf64-48fa-9bf1-48b8c3de3cb0" />
 <img width="574" height="157" alt="image" src="https://github.com/user-attachments/assets/505c1cc6-1371-4c60-984d-c7de3ee37570" />
-<img width="319" height="303" alt="image" src="https://github.com/user-attachments/assets/8bd37048-1ca6-4479-859f-72a4c0fc4b30" />
+<img width="319" height="150" alt="image" src="https://github.com/user-attachments/assets/8bd37048-1ca6-4479-859f-72a4c0fc4b30" />
 
 
 ## Contributors:
