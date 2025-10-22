@@ -1,19 +1,24 @@
-# Project Title
+## Financial Tracker
+The Online Store allows users to browse the vendor's available items and the amount for every item available. Also allows users to store items in a cart so they can check out their items.
 
-## Description of the Project
 
-Briefly describe what this Java console application does. Mention its purpose and who the intended users are. Explain the main functionality and what problems it aims to solve.
+## User stories
+- As a user, I want to list the vendor's inventory, so I can see what they have for sale.
+- As a user, I want to list my cart, so I can see what I am going to buy.
+## Some features include:
 
-## User Stories
+**Add items to cart**
+- Users are able to add items to the cart
 
-List the user stories that guided the development of your application. Format these stories as: "As a [type of user], I want [some goal] so that [some reason]."
+**Viewing the vendor's inventory**
+- View items available on the store
 
-- As a user, I want to be able to input my data, so that the application can process it accordingly.
-- As a user, I want to receive immediate feedback, so I can understand what to do next.
+**Price and final price**
+- Price is automatically calculated with all items in cart, allowing easy and smooth transactions.
+
 
 ## Setup
 
-Instructions on how to set up and run the project using IntelliJ IDEA.
 
 ### Prerequisites
 
@@ -28,41 +33,23 @@ Follow these steps to get your application running within IntelliJ IDEA:
 2. Select "Open" and navigate to the directory where you cloned or downloaded the project.
 3. After the project opens, wait for IntelliJ to index the files and set up the project.
 4. Find the main class with the `public static void main(String[] args)` method.
-5. Right-click on the file and select 'Run 'YourMainClassName.main()'' to start the application.
+5. Right-click on the file and select 'Run 'FinancialTracker.main()'' to start the application.
 
 ## Technologies Used
 
-- Java: Mention the version you are using.
-- Any additional libraries or frameworks used in the project.
+- Java SDK 17
+- IntelliJ IDEA
 
-## Demo
+## Demo(Left to right, top to bottom)
+<img width="270" height="154" alt="image" src="https://github.com/user-attachments/assets/2af1bf41-7fa8-47f4-9283-e2410a73a4fa" />
+<img width="205" height="173" alt="image" src="https://github.com/user-attachments/assets/be531e23-fde3-4923-99ee-5c9160733e2e" />
+<img width="266" height="218" alt="image" src="https://github.com/user-attachments/assets/bfa8c333-e2d4-4297-8e83-6cba88949208" />
+<img width="891" height="280" alt="image" src="https://github.com/user-attachments/assets/bfaabf7b-6884-44c2-ac06-3f9dbf69256c" />
+<img width="249" height="214" alt="image" src="https://github.com/user-attachments/assets/698189ea-acca-42a3-8927-9fbbc76593b7" />
+<img width="199" height="167" alt="image" src="https://github.com/user-attachments/assets/f99f3b4e-2d8a-490f-ae6f-dcabe58febe2" />
+<img width="303" height="205" alt="image" src="https://github.com/user-attachments/assets/ebbc0d9b-200e-4ca1-8cbb-d388627f318b" />
 
-Include screenshots or GIFs that show your application in action. Use tools like [Giphy Capture](https://giphy.com/apps/giphycapture) to record a GIF of your application.
 
-![Application Screenshot](path/to/your/screenshot.png)
 
-## Future Work
-
-Outline potential future enhancements or functionalities you might consider adding:
-
-- Additional feature to be developed.
-- Improvement of current functionalities.
-
-## Resources
-
-List resources such as tutorials, articles, or documentation that helped you during the project.
-
-- [Java Programming Tutorial](https://www.example.com)
-- [Effective Java](https://www.example.com)
-
-## Team Members
-
-- **Name 1** - Specific contributions or roles.
-- **Name 2** - Specific contributions or roles.
-
-## Thanks
-
-Express gratitude towards those who provided help, guidance, or resources:
-
-- Thank you to [Mentor's Name] for continuous support and guidance.
-- A special thanks to all teammates for their dedication and teamwork.
+## Contributors:
+- Roger Su
