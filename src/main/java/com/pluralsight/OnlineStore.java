@@ -135,6 +135,7 @@ public class OnlineStore {
             switch(userInput.toUpperCase()) {
                 case "R":
                     removeItem(cart, scanner);
+                    didExit = true;
                     break;
                 case "Y":
                     payCart(cart, scanner, totalAmount);
@@ -142,7 +143,7 @@ public class OnlineStore {
                     break;
                 default:
                     System.out.println("Returning to menu");
-                    didExit = true;
+                    return;
             }
         }
     }
