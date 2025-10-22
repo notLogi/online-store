@@ -1,7 +1,6 @@
 package com.pluralsight;
 
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 import java.io.*;
 
 
@@ -10,7 +9,7 @@ public class OnlineStore {
 
         // Create lists for inventory and the shopping cart
         ArrayList<Product> inventory = new ArrayList<>();
-        ArrayList<Product> cart = new ArrayList<>();
+        HashMap<Product, Integer> cart = new HashMap<>();
 
         // Load inventory from the data file (pipe-delimited: id|name|price)
         loadInventory("products.csv", inventory);
@@ -82,7 +81,7 @@ public class OnlineStore {
      * Displays all products and lets the user add one to the cart.
      * Typing X returns to the main menu.
      */
-    public static void displayProducts(ArrayList<Product> inventory, ArrayList<Product> cart, Scanner scanner) {
+    public static void displayProducts(ArrayList<Product> inventory, HashMap<Product, Integer> cart, Scanner scanner) {
         for(Product product : inventory){
             System.out.println(product.displayStringCart());
         }
@@ -94,18 +93,23 @@ public class OnlineStore {
 
         Product selected = findProductById(id, inventory);
         if(selected != null){
-            cart.add(selected);
+            if(!cart.containsKey(selected)) {
+                cart.put(selected, 1);
+            }
+            else{
+                cart.put(selected, cart.get(selected) + 1);
+            }
             System.out.println("Product added successfully");
         }
 
     }
 
-    public static void displayCart(ArrayList<Product> cart, Scanner scanner) {
+    public static void displayCart(HashMap<Product, Integer> cart, Scanner scanner) {
         double totalPrice = 0;
         System.out.println("Your cart: ");
 
-        for(Product product : cart){
-            System.out.println(product.displayStringCart());
+        for(Product product : cart.keySet()){
+            System.out.println(product.displayStringCart() + "\nQuantity: " + cart.get(product));
             totalPrice += product.getPrice();
         }
 
@@ -125,7 +129,7 @@ public class OnlineStore {
      * 3. Display a simple receipt.
      * 4. Clear the cart.
      */
-    public static void checkOut(ArrayList<Product> cart, double totalAmount, Scanner scanner) {
+    public static void checkOut(HashMap<Product, Integer> cart, double totalAmount, Scanner scanner) {
         System.out.println("Are you sure you want to checkout? Type Y");
         System.out.println("If you want to remove an item, type R");
         String userInput = scanner.nextLine();
@@ -135,6 +139,7 @@ public class OnlineStore {
             switch(userInput.toUpperCase()) {
                 case "R":
                     removeItem(cart, scanner);
+                    didExit = true;
                     break;
                 case "Y":
                     payCart(cart, scanner, totalAmount);
@@ -142,7 +147,7 @@ public class OnlineStore {
                     break;
                 default:
                     System.out.println("Returning to menu");
-                    didExit = true;
+                    return;
             }
         }
     }
@@ -161,14 +166,14 @@ public class OnlineStore {
         System.out.println("Product does not exist.");
         return null;
     }
-    public static void payCart(ArrayList<Product> cart, Scanner scanner, double totalAmount){
+    public static void payCart(HashMap<Product, Integer> cart, Scanner scanner, double totalAmount){
         System.out.println("Enter your payment.");
         double userPaying = scanner.nextDouble();
         scanner.nextLine();
         double change = userPaying - totalAmount;
         System.out.println("Here are your items bought: ");
-        for (Product product : cart) {
-            System.out.println(product.displayStringCart() + "\n");
+        for (Product product : cart.keySet()) {
+            System.out.println(product.displayStringCart() + "\nQuantity: " + cart.get(product));
         }
         if(change < 0){
             System.out.println("You don't have enough money!");
@@ -177,20 +182,38 @@ public class OnlineStore {
         if (change != 0) System.out.printf("Change: $%.2f%n", change);
         cart.clear();
     }
-    public static void removeItem(ArrayList<Product> cart, Scanner scanner){
+    public static void removeItem(HashMap<Product, Integer> cart, Scanner scanner){
         System.out.println("type the ID you want to remove: ");
         System.out.println("Type X to return");
         String idInput = scanner.nextLine();
         if (idInput.equalsIgnoreCase("X")){
             return;
         }
-        for (int i = 0; i < cart.size(); i++) {
+        //Because you can't use a regular for loop to remove a key/value in a hashmap, you have to use iterators.
+        //Map entry acts like a temporary container, referencing the original map, not by value.
+        Iterator<HashMap.Entry<Product, Integer>> it = cart.entrySet().iterator();
+
+        while(it.hasNext()){
+            HashMap.Entry<Product, Integer> entry = it.next();//this moves the iterator "up"
+            if(entry.getKey().getSku().equalsIgnoreCase(idInput) && entry.getValue() == 1){
+                it.remove();
+                System.out.println("removed");
+                return;
+            }
+            else if(entry.getKey().getSku().equalsIgnoreCase(idInput) && entry.getValue() > 1){
+                cart.put(entry.getKey(), entry.getValue() - 1);
+                System.out.println("removed one only.");
+                return;
+            }
+        }
+
+        /*for (int i = 0; i < cart.size(); i++) {
             if (idInput.equalsIgnoreCase(cart.get(i).getSku())) {
                 cart.remove(i);
                 System.out.println("successfully removed");
                 return;
             }
-        }
-        System.out.println("Input is invalid");
+        }*/
+        System.out.println("Input does not match.");
     }
 }

@@ -52,7 +52,12 @@ Follow these steps to get your application running within IntelliJ IDEA:
 <img width="468" height="160" alt="image" src="https://github.com/user-attachments/assets/a1914203-d68c-49cc-b710-b987352b2a8c" />
 
 ## Interesting Part of my Code:
-- An interesting part of my code is removing an element, because if you use a map, you need to use iterators.
+- An interesting part of my code is removing an element, because if you use a map, you need to use iterators. Had to look up a way to remove a K/V without using a for loop.
+
+## Resources used:
+- https://www.w3schools.com/java/java_hashmap.asp
+- https://www.w3schools.com/java/ref_hashmap_entryset.asp
+- https://stackoverflow.com/questions/40828663/how-to-subtract-values-in-a-single-hashmap-while-iterating-over-the-map
 
 ## Contributors:
 - Roger Su
