@@ -1,4 +1,4 @@
-## Financial Tracker
+## Online Store
 The Online Store allows users to browse the vendor's available items and the amount for every item available. Also allows users to store items in a cart so they can check out their items.
 
 
@@ -48,6 +48,11 @@ Follow these steps to get your application running within IntelliJ IDEA:
 <img width="574" height="157" alt="image" src="https://github.com/user-attachments/assets/505c1cc6-1371-4c60-984d-c7de3ee37570" />
 <img width="319" height="150" alt="image" src="https://github.com/user-attachments/assets/8bd37048-1ca6-4479-859f-72a4c0fc4b30" />
 
+## An error showcase:
+<img width="468" height="160" alt="image" src="https://github.com/user-attachments/assets/a1914203-d68c-49cc-b710-b987352b2a8c" />
+
+## Interesting Part of my Code:
+- An interesting part of my code is removing an element, because if you use a map, you need to use iterators.
 
 ## Contributors:
 - Roger Su
